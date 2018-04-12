@@ -1,4 +1,5 @@
 require_relative "definitions.rb"
+require "colorize"
 
 each = Definitions.new(".each is a method that is called on an array. It loops through every element of an array and runs its code on each element.","each")
 
@@ -23,13 +24,34 @@ reject = Definitions.new(".reject{|obj|block} returns an array where the given b
 select = Definitions.new(".select{|obj|block} returns an array where the given block returns true.","select"
 )
 
-def_array = [each, count, drop, first, include, max, min, minmax, one, reject, select]
+my_dictionary = Dictionary.new
 
-def_length = def_array.length
+my_dictionary.add_new_entry(each)
+my_dictionary.add_new_entry(count)
+my_dictionary.add_new_entry(drop)
+my_dictionary.add_new_entry(first)
+my_dictionary.add_new_entry(include)
+my_dictionary.add_new_entry(max)
+my_dictionary.add_new_entry(min)
+my_dictionary.add_new_entry(minmax)
+my_dictionary.add_new_entry(one)
+my_dictionary.add_new_entry(reject)
+my_dictionary.add_new_entry(select)
+
+
 input = ARGV
 input_length = input.length
 
-# if valid_input(def_array, input)
-if !valid_input(def_array, input)
-  puts "I'm sorry, I don't know that method :("
+if input_length > 2 && input[0]=='add'
+  title = input[1]
+  define = input.slice!(2,input_length)
+  my_dictionary.add_new_entry(my_dictionary.create_new_entry(title,define.join(" ")))
 end
+
+if input_length == 1
+  if !valid_input(my_dictionary.definition_array, input)
+    puts "I'm sorry, I don't know that method :(".red
+  end
+end
+
+# puts my_dictionary.definition_array[11].define
